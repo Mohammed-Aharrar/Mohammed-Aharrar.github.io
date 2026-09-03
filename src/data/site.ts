@@ -4,7 +4,6 @@ export type Lang = typeof languages[number];
 export const profile = {
   name: "Mohammed Aharrar Soulali",
   email: "mohamedaharrar7@gmail.com",
-  phone: "+33 7 45 49 47 13",
   location: "Palaiseau, France",
   linkedin: "https://www.linkedin.com/in/mohammed-aharrar"
 };
