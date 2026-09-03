@@ -1,0 +1,16 @@
+digraph G {
+  graph [bgcolor="#edf1f5", rankdir=LR, nodesep=0.3, ranksep=0.55, margin=0.18, pad=0.05]
+  node [shape=box, style="filled", fillcolor="#ffffff", color="#d7dde1", penwidth=1, fontname="Arial", fontsize=12, fontcolor="#12202b", margin="0.17,0.11"]
+  edge [color="#12202b", penwidth=1, arrowsize=0.68]
+  reports [label="French technical reports"]
+  prep [label="Cleaning + field selection"]
+  classify [label="TF-IDF + neural network"]
+  retrieve [label="BM25 retrieval"]
+  level [label="Importance level\n+ confidence"]
+  similar [label="Ranked similar reports"]
+  {rank=same; classify; retrieve}
+  {rank=same; level; similar}
+  reports -> prep
+  prep -> classify -> level
+  prep -> retrieve -> similar
+}

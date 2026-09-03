@@ -1,0 +1,12 @@
+digraph G {
+  graph [bgcolor="#edf1f5", rankdir=LR, nodesep=0.25, ranksep=0.42, margin=0.18, pad=0.05]
+  node [shape=box, style="filled", fillcolor="#ffffff", color="#d7dde1", penwidth=1, fontname="Arial", fontsize=12, fontcolor="#12202b", margin="0.15,0.1"]
+  edge [color="#12202b", penwidth=1, arrowsize=0.66]
+  image [label="Container image"]
+  edges [label="Canny edges"]
+  separate [label="Edge separation"]
+  candidates [label="Ellipse candidates"]
+  fit [label="Stable ellipse fitting"]
+  geometry [label="Fill-level geometry"]
+  image -> edges -> separate -> candidates -> fit -> geometry
+}

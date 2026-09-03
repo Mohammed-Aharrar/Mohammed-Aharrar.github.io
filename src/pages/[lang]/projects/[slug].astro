@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import OrganizationLogo from "../../../components/OrganizationLogo.astro";
+import { languages, ui, type Lang } from "../../../data/site";
+import { projects, type Project } from "../../../data/projects";
+
+export function getStaticPaths() {
+  return languages.flatMap((lang) =>
+    projects.map((project) => ({
+      params: { lang, slug: project.slug },
+      props: { lang, project }
+    }))
+  );
+}
+
+interface Props { lang: Lang; project: Project; }
+
+const { lang, project } = Astro.props;
+const t = ui[lang];
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+
+const relations: Record<string, { en: string; fr: string; logo?: string; alt?: string }> = {
+  "industrial-anomaly-detection": {
+    en: "Acoustic research",
+    fr: "Recherche acoustique"
+  },
+  "orano-video-analysis": {
+    en: "Industrial collaboration · Orano",
+    fr: "Collaboration industrielle · Orano",
+    logo: "/logos/orano.png",
+    alt: "Orano"
+  },
+  "aws-iot-data-pipeline": {
+    en: "Cloud engineering",
+    fr: "Ingénierie cloud"
+  },
+  "handwritten-letter-recognition": {
+    en: "Motion classification",
+    fr: "Classification du mouvement"
+  },
+  "multi-agent-traffic-optimization": {
+    en: "Multi-agent simulation",
+    fr: "Simulation multi-agent"
+  }
+};
+
+const relation = relations[project.slug];
+
+const evidenceType =
+  project.slug === "industrial-anomaly-detection" ? "anomaly" :
+  project.slug === "orano-video-analysis" ? "orano" :
+  project.slug === "aws-iot-data-pipeline" ? "aws" :
+  project.slug === "multi-agent-traffic-optimization" ? "traffic" :
+  project.slug === "handwritten-letter-recognition" ? "letters" :
+  null;
+---
+
+<BaseLayout lang={lang} title={`${project.title[lang]} | Mohammed Aharrar Soulali`} description={project.summary[lang]}>
+  <article class={`case shell ${project.slug === "industrial-anomaly-detection" ? "case--anomaly" : ""}`}>
+    <a class="back-link" href={`/${lang}/projects/`}>{t.labels.back}</a>
+
+    <header class="case-header">
+      <div class="case-title-row">
+        <div>
+          <p class="kicker">{relation?.[lang] ?? project.category[lang]}</p>
+          <h1>{project.title[lang]}</h1>
+        </div>
+        {relation?.logo && <OrganizationLogo src={relation.logo} alt={relation.alt ?? ""} compact />}
+      </div>
+
+      <p class="case-summary">{project.summary[lang]}</p>
+
+      <div class="case-meta">
+        <span>{project.period[lang]}</span>
+        <span>{project.category[lang]}</span>
+        <span>{project.technologies.join(" · ")}</span>
+      </div>
+    </header>
+
+    <div class="case-body">
+      <section>
+        <p class="case-index">01</p>
+        <div>
+          <h2>{t.labels.context}</h2>
+          <p>{project.context[lang]}</p>
+        </div>
+      </section>
+
+      <section>
+        <p class="case-index">02</p>
+        <div>
+          <h2>{t.labels.objective}</h2>
+          <p>{project.objective[lang]}</p>
+        </div>
+      </section>
+
+      <section>
+        <p class="case-index">03</p>
+        <div>
+          <h2>{t.labels.approach}</h2>
+          <ol class="text-list">
+            {project.approach[lang].map((x) => <li>{x}</li>)}
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <p class="case-index">04</p>
+        <div>
+          <h2>{t.labels.results}</h2>
+          {evidenceType !== "aws" && (
+            <ul class="text-list">
+              {project.results[lang].map((x) => <li>{x}</li>)}
+            </ul>
+          )}
+          {evidenceType && (
+            <div class="results-evidence">
+
+            {evidenceType === "anomaly" && (
+              <div class="anomaly-case-study">
+                <div class="anomaly-metrics" aria-label={lang === "en" ? "Industrial anomaly detection metrics" : "Métriques de détection d'anomalies industrielles"}>
+                  <div><strong>0.92</strong><span>F1 · FPCA + Mahalanobis</span></div>
+                  <div><strong>50</strong><span>{lang === "en" ? "recordings" : "enregistrements"}</span></div>
+                  <div><strong>99%+</strong><span>{lang === "en" ? "variance retained" : "variance conservée"}</span></div>
+                  <div><strong>11 / 12</strong><span>{lang === "en" ? "PCA / FPCA components" : "composantes PCA / FPCA"}</span></div>
+                </div>
+
+                <img class="case-diagram" src={asset("/images/projects/research-anomaly.svg")} alt={lang === "en" ? "Signal processing workflow from acoustic signals to an anomaly threshold" : "Workflow de traitement des signaux acoustiques jusqu'au seuil d'anomalie"} loading="lazy" />
+
+                <div class="anomaly-comparison">
+                  <div class="comparison-heading">{lang === "en" ? "Model comparison" : "Comparaison des modèles"}</div>
+                  <div class="comparison-row comparison-header"><span>{lang === "en" ? "Representation + score" : "Représentation + score"}</span><span>F1</span><span>Precision</span><span>Recall</span></div>
+                  <div class="comparison-row"><span>PCA + OSPCA</span><span>0.86</span><span>75%</span><span>100%</span></div>
+                  <div class="comparison-row"><span>PCA + Mahalanobis</span><span>0.76</span><span>71%</span><span>83%</span></div>
+                  <div class="comparison-row"><span>FPCA + OSPCA</span><span>0.73</span><span>80%</span><span>67%</span></div>
+                  <div class="comparison-row comparison-best"><span>FPCA + Mahalanobis</span><span>0.92</span><span>92%</span><span>92%</span></div>
+                </div>
+                <p class="evidence-caption">{lang === "en" ? "I keep the source recordings private here; the modelling choices, evaluation protocol and measured scores remain visible." : "Je garde ici les enregistrements sources privés ; les choix de modélisation, le protocole d'évaluation et les scores mesurés restent visibles."}</p>
+              </div>
+            )}
+
+            {evidenceType === "orano" && (
+              <>
+                <img class="case-diagram" src={asset("/images/projects/orano-video.svg")} alt={lang === "en" ? "Orano video analysis workflow from input video through analysis and distance extraction to the final overlay" : "Workflow d'analyse vidéo Orano, de la vidéo d'entrée à l'overlay final"} loading="lazy" />
+                <p class="confidential-note">
+                  {lang === "en"
+                    ? "I have left the original inspection frames and industrial data out of the public portfolio."
+                    : "Je n'affiche pas les images d'inspection originales ni les données industrielles dans le portfolio public."}
+                </p>
+              </>
+            )}
+
+            {evidenceType === "aws" && (
+              <div class="aws-results">
+                <p class="aws-results-lead">{lang === "en" ? "Both implementations completed the same summarization and consolidation work. Their differences appeared in operation, maintenance and runtime behaviour." : "Les deux implémentations ont exécuté le même travail de résumé et de consolidation. Leurs différences concernaient l'exploitation, la maintenance et le comportement à l'exécution."}</p>
+                <img class="case-diagram" src={asset("/images/projects/aws-iot.svg")} alt={lang === "en" ? "AWS IoT data pipeline with EC2 and Lambda processing paths" : "Pipeline de données IoT AWS avec chaînes EC2 et Lambda"} loading="lazy" />
+                <div class="aws-tradeoffs">
+                  <article>
+                    <span>EC2 + SQS</span>
+                    <h3>{lang === "en" ? "Control and sustained workloads" : "Contrôle et traitements prolongés"}</h3>
+                    <p>{lang === "en" ? "Java workers gave us direct control over the runtime and room for longer or specialized processing. CPU usage stayed near 2.84–3.02%, with no failed status checks; that control came with server setup, upkeep and capacity planning." : "Les workers Java nous donnaient la main sur l'environnement et laissaient davantage de place aux traitements longs ou spécialisés. Le CPU restait proche de 2,84–3,02 %, sans échec des contrôles de statut ; ce contrôle impliquait configuration, entretien et dimensionnement."}</p>
+                  </article>
+                  <article>
+                    <span>AWS Lambda</span>
+                    <h3>{lang === "en" ? "Simple event-driven operation" : "Exécution événementielle simplifiée"}</h3>
+                    <p>{lang === "en" ? "Lambda reacted directly to S3 events without a server to maintain. CloudWatch counted very few errors and no throttling, although summarization sometimes ran for roughly 60 seconds—a poor fit for heavier work." : "Lambda réagissait directement aux événements S3, sans serveur à maintenir. CloudWatch comptait très peu d'erreurs et aucun throttling, mais le résumé durait parfois près de 60 secondes, un mauvais ajustement pour les charges plus lourdes."}</p>
+                  </article>
+                </div>
+                <div class="aws-verdict"><span>{lang === "en" ? "Choice" : "Choix"}</span><p>{lang === "en" ? "I would choose Lambda for intermittent event-driven jobs and EC2 when runtime control or sustained processing matters more. Workload duration and maintenance constraints decide between them." : "Je choisirais Lambda pour des tâches événementielles intermittentes, et EC2 lorsque le contrôle de l'environnement ou la durée du traitement prend le dessus. La charge et les contraintes de maintenance tranchent entre les deux."}</p></div>
+              </div>
+            )}
+
+            {evidenceType === "traffic" && (
+              <div class="project-evidence-stack">
+                <div class="anomaly-metrics evidence-metrics evidence-metrics--three">
+                  <div><strong>1,000</strong><span>{lang === "en" ? "simulation steps" : "étapes simulées"}</span></div>
+                  <div><strong>2–4×</strong><span>{lang === "en" ? "lower waiting time" : "attente réduite"}</span></div>
+                  <div><strong>4</strong><span>{lang === "en" ? "traffic-light agents" : "agents de feux"}</span></div>
+                </div>
+                <img class="case-diagram" src={asset("/images/projects/traffic-agents.svg")} alt={lang === "en" ? "Decentralized traffic-light decision loop" : "Boucle de décision décentralisée des feux"} loading="lazy" />
+              </div>
+            )}
+
+            {evidenceType === "letters" && (
+              <div class="project-evidence-stack">
+                <div class="anomaly-metrics evidence-metrics">
+                  <div><strong>1,600</strong><span>{lang === "en" ? "motion samples" : "séquences"}</span></div>
+                  <div><strong>85.625%</strong><span>Random Forest</span></div>
+                  <div><strong>93%</strong><span>{lang === "en" ? "LSTM accuracy" : "accuracy LSTM"}</span></div>
+                  <div><strong>55%</strong><span>{lang === "en" ? "unseen user" : "utilisateur inconnu"}</span></div>
+                </div>
+                <img class="case-diagram" src={asset("/images/projects/letter-lstm.svg")} alt={lang === "en" ? "LSTM architecture for classifying smart-glove motion sequences" : "Architecture LSTM pour classifier les séquences du gant intelligent"} loading="lazy" />
+                <p class="evidence-caption">{lang === "en" ? "The regular split produced 93%. Once I reserved one participant for testing, accuracy dropped to 55%; writing style mattered far more than the first score suggested." : "Le split standard donnait 93 %. En réservant un participant au test, l'accuracy descendait à 55 % ; le style gestuel comptait bien davantage que ne le suggérait le premier score."}</p>
+              </div>
+            )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section>
+        <p class="case-index">05</p>
+        <div>
+          <h2>{t.labels.tech}</h2>
+          <p>{project.technologies.join(", ")}</p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,12 @@
+digraph G {
+  graph [bgcolor="#edf1f5", rankdir=LR, nodesep=0.26, ranksep=0.4, margin=0.18, pad=0.05]
+  node [shape=box, style="filled", fillcolor="#ffffff", color="#d7dde1", penwidth=1, fontname="Arial", fontsize=12, fontcolor="#12202b", margin="0.15,0.1"]
+  edge [color="#12202b", penwidth=1, arrowsize=0.66]
+  input [label="Glove sequence\n32 time steps"]
+  scale [label="Standardize\nsensor channels"]
+  lstm1 [label="LSTM\n50 units"]
+  dropout [label="Dropout"]
+  lstm2 [label="LSTM\n50 units"]
+  dense [label="Softmax\n26 letters"]
+  input -> scale -> lstm1 -> dropout -> lstm2 -> dense
+}

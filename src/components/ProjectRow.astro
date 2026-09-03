@@ -1,0 +1,52 @@
+---
+import type { Project } from "../data/projects";
+import type { Lang } from "../data/site";
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  number: number;
+}
+
+const { project, lang, number } = Astro.props;
+
+const projectType: Record<string, { en: string; fr: string }> = {
+  "industrial-anomaly-detection": {
+    en: "Acoustic research",
+    fr: "Recherche acoustique"
+  },
+  "orano-video-analysis": {
+    en: "Industrial collaboration · Orano",
+    fr: "Collaboration industrielle · Orano"
+  },
+  "aws-iot-data-pipeline": {
+    en: "Cloud engineering",
+    fr: "Ingénierie cloud"
+  },
+  "handwritten-letter-recognition": {
+    en: "Motion classification",
+    fr: "Classification du mouvement"
+  },
+  "multi-agent-traffic-optimization": {
+    en: "Multi-agent simulation",
+    fr: "Simulation multi-agent"
+  }
+};
+
+const typeLabel = projectType[project.slug]?.[lang] ?? project.category[lang];
+---
+
+<a class="project-row" href={`/${lang}/projects/${project.slug}/`}>
+  <span class="project-number">{String(number).padStart(2, "0")}</span>
+
+  <span class="project-main">
+    <span class="project-kind">{typeLabel}</span>
+    <strong>{project.title[lang]}</strong>
+    <span>{project.summary[lang]}</span>
+  </span>
+
+  <span class="project-side">
+    <span>{project.category[lang]}</span>
+    <span>{project.period[lang]}</span>
+  </span>
+</a>

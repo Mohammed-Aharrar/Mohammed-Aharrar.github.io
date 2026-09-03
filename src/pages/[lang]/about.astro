@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { languages, ui, profile, type Lang } from "../../data/site";
+
+export function getStaticPaths(){return languages.map(lang=>({params:{lang},props:{lang}}));}
+interface Props{lang:Lang}
+const {lang}=Astro.props; const t=ui[lang];
+const asset = (path:string) => `${import.meta.env.BASE_URL}${path}`;
+const skills=lang==="en" ? [
+ ["Programming and data","Python, Java, SQL, PostgreSQL, R, Bash/Shell"],
+ ["Machine learning and AI","scikit-learn, TensorFlow, NLP, Transformers, LSTM, Computer Vision"],
+ ["Cloud and software","AWS, FastAPI, Flask, REST APIs, Git, Docker, CI/CD"],
+ ["Engineering foundations","Statistical learning, optimization, time series, Big Data, software engineering, project management"]
+] : [
+ ["Programmation et données","Python, Java, SQL, PostgreSQL, R, Bash/Shell"],
+ ["Machine learning et IA","scikit-learn, TensorFlow, NLP, Transformers, LSTM, Computer Vision"],
+ ["Cloud et logiciel","AWS, FastAPI, Flask, API REST, Git, Docker, CI/CD"],
+ ["Fondements d'ingénierie","Apprentissage statistique, optimisation, séries temporelles, Big Data, ingénierie logicielle, gestion de projet"]
+];
+---
+
+<BaseLayout lang={lang} title={`${t.about} | Mohammed Aharrar Soulali`}>
+  <header class="about-hero shell">
+    <p class="kicker">{t.about}</p>
+    <h1>{t.aboutTitle}</h1>
+    <p>{t.aboutText}</p>
+  </header>
+
+  <main class="about-main shell">
+    <section class="about-block about-education-block">
+      <header class="about-block-heading">
+        <span class="about-index">01</span>
+        <div><p class="kicker">{t.education}</p><h2>{lang==="en"?"Two paths, studied side by side.":"Deux cursus menés en parallèle."}</h2></div>
+      </header>
+      <div class="about-education-cards">
+        <article class="about-education-card">
+          <div class="about-education-logo about-logo-mines"><img src={asset("logos/mines.png")} alt="Mines Saint-Étienne" /></div>
+          <div>
+            <div class="about-card-meta"><strong>École des Mines de Saint-Étienne</strong><span>{lang==="en"?"September 2022 — September 2025":"Septembre 2022 — Septembre 2025"}</span></div>
+            <h3>Diplôme d'Ingénieur Civil des Mines</h3>
+            <p>{lang==="en"?"I chose the Data Science and Computer Science track, where statistical learning, optimization and time series met software engineering, cloud systems and cybersecurity.":"J'ai choisi la spécialisation Data Science et Informatique, à la rencontre de l'apprentissage statistique, de l'optimisation, des séries temporelles, du génie logiciel, du cloud et de la cybersécurité."}</p>
+          </div>
+        </article>
+        <article class="about-education-card">
+          <div class="about-education-logo about-logo-ujm"><img src={asset("logos/ujm.png")} alt="Université Jean Monnet" /></div>
+          <div>
+            <div class="about-card-meta"><strong>Université Jean Monnet</strong><span>{lang==="en"?"September 2023 — June 2024":"Septembre 2023 — Juin 2024"}</span></div>
+            <h3>{lang==="en"?"Bachelor's degree in Mathematics":"Licence de Mathématiques"}</h3>
+            <p>{lang==="en"?"I completed this degree alongside engineering school to go further into probability, statistics, numerical methods and mathematical modelling.":"J'ai suivi cette licence en parallèle du cycle ingénieur pour approfondir les probabilités, les statistiques, les méthodes numériques et la modélisation mathématique."}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-block about-toolkit-block">
+      <header class="about-block-heading">
+        <span class="about-index">02</span>
+        <div><p class="kicker">{lang==="en"?"Technical toolkit":"Compétences techniques"}</p><h2>{lang==="en"?"What I work with.":"Mes outils de travail."}</h2></div>
+      </header>
+      <div class="about-skills-grid">
+        {skills.map(([name,items])=><article><h3>{name}</h3><p>{items}</p></article>)}
+      </div>
+    </section>
+
+    <section class="about-block about-languages-block">
+      <header class="about-block-heading">
+        <span class="about-index">03</span>
+        <div><p class="kicker">{lang==="en"?"Languages":"Langues"}</p><h2>{lang==="en"?"How I communicate.":"Les langues que je pratique."}</h2></div>
+      </header>
+      <ul class="about-language-list">
+        <li><strong>{lang==="en"?"French":"Français"}</strong><span>B2</span></li>
+        <li><strong>{lang==="en"?"English":"Anglais"}</strong><span>{lang==="en"?"C1 (TOEIC 945, 2024)":"C1 (TOEIC 945, 2024)"}</span></li>
+        <li><strong>{lang==="en"?"Arabic":"Arabe"}</strong><span>{lang==="en"?"Native":"Langue maternelle"}</span></li>
+        <li><strong>{lang==="en"?"German":"Allemand"}</strong><span>A1+</span></li>
+      </ul>
+    </section>
+
+    <section class="about-block about-contact-block" id="contact">
+      <header class="about-block-heading">
+        <span class="about-index">04</span>
+        <div><p class="kicker">{t.contact}</p><h2>{lang==="en"?"Have a problem worth modelling?":"Un problème mérite d'être modélisé ?"}</h2></div>
+      </header>
+      <p class="about-contact-lead">{t.contactText}</p>
+      <div class="about-contact-links">
+        <a href={`mailto:${profile.email}`}><span>Email</span><strong>{profile.email}</strong><em>↗</em></a>
+        <a href={profile.linkedin} target="_blank" rel="noreferrer"><span>LinkedIn</span><strong>linkedin.com/in/mohammed-aharrar</strong><em>↗</em></a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

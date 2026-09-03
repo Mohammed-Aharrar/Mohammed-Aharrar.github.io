@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ProjectRow from "../../../components/ProjectRow.astro";
+import { languages, ui, type Lang } from "../../../data/site";
+import { projects } from "../../../data/projects";
+export function getStaticPaths(){return languages.map(lang=>({params:{lang},props:{lang}}));}
+interface Props{lang:Lang}
+const {lang}=Astro.props; const t=ui[lang];
+---
+<BaseLayout lang={lang} title={`${t.projectsTitle} | Mohammed Aharrar Soulali`} description={t.projectsIntro}>
+<section class="page-title shell"><p class="kicker">{t.projectsTitle}</p><h1>{t.projectsIntro}</h1></section>
+<section class="shell section section-tight">
+  <div class="project-list">{projects.map((p,i)=><ProjectRow project={p} lang={lang} number={i+1}/>)}</div>
+</section>
+</BaseLayout>

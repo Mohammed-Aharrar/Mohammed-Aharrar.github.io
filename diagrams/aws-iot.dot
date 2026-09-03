@@ -1,0 +1,20 @@
+digraph G {
+  graph [bgcolor="#edf1f5", rankdir=LR, nodesep=0.28, ranksep=0.52, margin=0.18, pad=0.05]
+  node [shape=box, style="filled", fillcolor="#ffffff", color="#d7dde1", penwidth=1, fontname="Arial", fontsize=12, fontcolor="#12202b", margin="0.16,0.11"]
+  edge [color="#12202b", penwidth=1, arrowsize=0.68]
+  api [label="IoT CSV API"]
+  upload [label="UploadClient"]
+  raw [label="S3\nraw-data"]
+  ec2 [label="SQS + EC2\nworkers"]
+  lambda [label="Lambda\nworkers"]
+  summary [label="S3\nsummaries"]
+  consolidate [label="Consolidation\naverage + std. dev."]
+  output [label="ExportClient\nfinal CSV"]
+  {rank=same; ec2; lambda}
+  api -> upload -> raw
+  raw -> ec2
+  raw -> lambda
+  ec2 -> summary
+  lambda -> summary
+  summary -> consolidate -> output
+}

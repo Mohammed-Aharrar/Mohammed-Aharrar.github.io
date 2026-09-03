@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>Mohammed Aharrar Soulali</title></head>
+<body>
+  <p><a href="/en/">English</a> / <a href="/fr/">Français</a></p>
+  <script is:inline>
+    const preferred=navigator.language.toLowerCase().startsWith("fr")?"fr":"en";
+    window.location.replace(`/${preferred}/`);
+  </script>
+</body>
+</html>

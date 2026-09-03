@@ -1,0 +1,23 @@
+---
+import { ui, profile, type Lang } from "../data/site";
+interface Props { lang:Lang; }
+const {lang}=Astro.props; const t=ui[lang]; const path=Astro.url.pathname;
+const other:Lang=lang==="en"?"fr":"en";
+const switchHref=path.replace(/^\/(en|fr)(?=\/|$)/,`/${other}`);
+const links=[
+  [`/${lang}/`,t.nav.home,"home"],
+  [`/${lang}/projects/`,t.nav.projects,"projects"],
+  [`/${lang}/about/`,t.nav.about,"about"],
+  [`/${lang}/cv/`,t.nav.cv,"cv"]
+] as const;
+const isActive=(href:string,key:string)=>key==="home"?path===href:path.startsWith(href);
+---
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="nameplate" href={`/${lang}/`}>{profile.name}</a>
+    <nav class="main-nav">
+      {links.map(([href,label,key])=><a class:list={[isActive(href,key)&&"active"]} href={href}>{label}</a>)}
+    </nav>
+    <a class="language-switch" href={switchHref} hreflang={other}>{t.switch}</a>
+  </div>
+</header>

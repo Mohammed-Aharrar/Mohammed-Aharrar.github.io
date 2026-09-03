@@ -1,0 +1,201 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { languages, ui, profile, type Lang } from "../../data/site";
+import { projects } from "../../data/projects";
+import { experiences } from "../../data/experiences";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+interface Props { lang: Lang; }
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const profileImage = asset("images/profile.jpeg");
+
+const experience = experiences.map((item) => ({
+  slug: item.slug,
+  logos: item.logos.map((logo) => ({ ...logo, src: asset(logo.src) })),
+  org: item.organization[lang],
+  period: item.period[lang],
+  role: item.role[lang],
+  text: item.summary[lang]
+}));
+
+const education = lang === "en"
+  ? [
+      {
+        logo: asset("logos/mines.png"), logoAlt: "Mines Saint-Étienne", logoClass: "brand-mines",
+        school: "École des Mines de Saint-Étienne", degree: "Diplôme d'Ingénieur Civil des Mines",
+        period: "2022 — 2025", detail: "Data Science and Computer Science"
+      },
+      {
+        logo: asset("logos/ujm.png"), logoAlt: "Université Jean Monnet", logoClass: "brand-ujm",
+        school: "Université Jean Monnet", degree: "Bachelor's degree in Mathematics",
+        period: "2023 — 2024", detail: "Completed alongside the engineering curriculum"
+      }
+    ]
+  : [
+      {
+        logo: asset("logos/mines.png"), logoAlt: "Mines Saint-Étienne", logoClass: "brand-mines",
+        school: "École des Mines de Saint-Étienne", degree: "Diplôme d'Ingénieur Civil des Mines",
+        period: "2022 — 2025", detail: "Spécialisation Data Science et Informatique"
+      },
+      {
+        logo: asset("logos/ujm.png"), logoAlt: "Université Jean Monnet", logoClass: "brand-ujm",
+        school: "Université Jean Monnet", degree: "Licence de Mathématiques",
+        period: "2023 — 2024", detail: "Réalisée en parallèle du cycle ingénieur"
+      }
+    ];
+
+const selected = [
+  projects.find((p) => p.slug === "industrial-anomaly-detection")!,
+  projects.find((p) => p.slug === "orano-video-analysis")!,
+  projects.find((p) => p.slug === "aws-iot-data-pipeline")!
+];
+const projectActions = lang === "en"
+  ? ["Read the research case", "Open the industrial study", "See the cloud comparison"]
+  : ["Lire l'étude de recherche", "Ouvrir le projet industriel", "Voir la comparaison cloud"];
+const internshipActions = lang === "en"
+  ? ["Read the EDF internship", "Open the GMI work"]
+  : ["Lire le PFE chez EDF", "Ouvrir le stage au GMI"];
+
+const focus = ["Machine Learning", "NLP", "Computer Vision", "Data & Cloud"];
+---
+
+<BaseLayout lang={lang} title={`${profile.name} | ${t.role}`} description={t.intro}>
+  <section class="home-hero shell">
+    <div class="home-hero-copy">
+      <p class="kicker">{t.role}</p>
+      <h1>{t.hero}</h1>
+      <p class="home-hero-lead">{t.intro}</p>
+      <div class="home-actions">
+        <a class="home-action-primary" href={`/${lang}/projects/`}>
+          {lang === "en" ? "See selected work" : "Voir les projets sélectionnés"}
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="home-action-secondary" href={`/${lang}/about/#contact`}>
+          {lang === "en" ? "Contact me" : "Me contacter"}
+        </a>
+      </div>
+    </div>
+
+    <aside class="home-profile" aria-label={lang === "en" ? "Profile summary" : "Résumé du profil"}>
+      <div class="portrait"><img src={profileImage} alt="Mohammed Aharrar Soulali" /></div>
+      <div class="home-profile-name">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div><strong>{profile.name}</strong></div>
+      </div>
+      <dl class="home-quick-facts">
+        <div><dt>{lang === "en" ? "Based in" : "Basé à"}</dt><dd>{profile.location}</dd></div>
+        <div><dt>{lang === "en" ? "Background" : "Formation"}</dt><dd>Mines Saint-Étienne</dd></div>
+        <div><dt>{lang === "en" ? "Focus" : "Spécialité"}</dt><dd>ML · Data · MLOps</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="home-section shell" aria-labelledby="experience-heading">
+    <header class="home-section-header">
+      <span class="home-section-index">01</span>
+      <div>
+        <p class="kicker">{t.experience}</p>
+        <h2 id="experience-heading">{lang === "en"
+          ? "Machine learning, computer vision and data shaped by industrial constraints."
+          : "Machine learning, vision par ordinateur et données face aux contraintes industrielles."}</h2>
+      </div>
+    </header>
+    <div class="home-experience-grid">
+      {experience.map((item, index) => (
+        <a class="home-experience-card" href={`/${lang}/experience/${item.slug}/`}>
+          <div class:list={["home-brand-slot", item.logos.length > 1 && "home-brand-pair"]}>
+            {item.logos.map((logo) => (
+              <img class={logo.className} src={logo.src} alt={logo.alt} loading="lazy" />
+            ))}
+          </div>
+          <div class="home-experience-content">
+            <div class="home-card-meta"><strong>{item.org}</strong><span>{item.period}</span></div>
+            <h3>{item.role}</h3>
+            <p>{item.text}</p>
+            <span class="home-experience-link">{internshipActions[index]} →</span>
+          </div>
+          <span class="home-experience-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-education-section">
+    <div class="shell">
+      <header class="home-section-header">
+        <span class="home-section-index">02</span>
+        <div>
+          <p class="kicker">{t.education}</p>
+          <h2>{lang === "en"
+            ? "Engineering breadth, backed by a second degree in mathematics."
+            : "Une formation d'ingénieur complétée par une licence de mathématiques."}</h2>
+        </div>
+        <a class="plain-link" href={`/${lang}/about/`}>
+          {lang === "en" ? "Full background" : "Voir le parcours"}
+        </a>
+      </header>
+      <div class="home-education-grid">
+        {education.map((item) => (
+          <article class="home-education-card">
+            <div class:list={["home-brand-slot", "home-education-logo", item.logoClass]}>
+              <img src={item.logo} alt={item.logoAlt} loading="lazy" />
+            </div>
+            <div class="home-education-copy">
+              <span>{item.period}</span><h3>{item.degree}</h3><p>{item.school}</p><small>{item.detail}</small>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section shell" aria-labelledby="projects-heading">
+    <header class="home-section-header">
+      <span class="home-section-index">03</span>
+      <div><p class="kicker">{t.selected}</p><h2 id="projects-heading">{t.selectedText}</h2></div>
+      <a class="plain-link" href={`/${lang}/projects/`}>{t.all}</a>
+    </header>
+    <div class="home-project-grid">
+      {selected.map((project, index) => (
+        <a class="home-project-card" href={`/${lang}/projects/${project.slug}/`}>
+          <div class="home-project-index">0{index + 1}</div>
+          <div class="home-project-copy">
+            <p class="home-project-category">{project.category[lang]}</p>
+            <h3>{project.title[lang]}</h3>
+            <p class="home-project-summary">{project.summary[lang]}</p>
+          </div>
+          <div class="home-project-side">
+            <span>{project.period[lang]}</span>
+            <p>{project.technologies.slice(0, 4).join(" · ")}</p>
+            <span class="home-project-link">{projectActions[index]} <b aria-hidden="true">→</b></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-focus-section">
+    <div class="shell home-focus-grid">
+      <div>
+        <span class="home-section-index">04</span><p class="kicker">{t.technical}</p>
+        <h2>{lang === "en"
+          ? "Taking models beyond the notebook."
+          : "Faire sortir les modèles du notebook."}</h2>
+      </div>
+      <div>
+        <ol class="home-focus-list">
+          {focus.map((item, index) => <li><span>0{index + 1}</span><strong>{item}</strong></li>)}
+        </ol>
+        <p>{lang === "en"
+          ? "I want to spend more time on the parts that make a model dependable after training: data pipelines, deployment, monitoring and reproducible experiments. Applied ML remains the core of that work."
+          : "Je veux consacrer davantage de temps à ce qui rend un modèle fiable après l'entraînement : pipelines de données, déploiement, suivi et expériences reproductibles. Le ML appliqué reste au centre de cette trajectoire."}</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

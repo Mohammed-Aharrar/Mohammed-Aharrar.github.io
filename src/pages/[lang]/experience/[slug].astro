@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { languages, ui, type Lang } from "../../../data/site";
+import { experiences, type ExperienceCase } from "../../../data/experiences";
+
+export function getStaticPaths() {
+  return languages.flatMap((lang) =>
+    experiences.map((experience) => ({
+      params: { lang, slug: experience.slug },
+      props: { lang, experience }
+    }))
+  );
+}
+
+interface Props { lang: Lang; experience: ExperienceCase; }
+
+const { lang, experience } = Astro.props;
+const t = ui[lang];
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" : "gmi";
+---
+
+<BaseLayout lang={lang} title={`${experience.role[lang]} | Mohammed Aharrar Soulali`} description={experience.summary[lang]}>
+  <article class="case shell">
+    <a class="back-link" href={`/${lang}/#experience-heading`}>
+      {lang === "en" ? "Back to internships" : "Retour aux stages"}
+    </a>
+
+    <header class="case-header">
+      <div class="case-title-row">
+        <div>
+          <p class="kicker">{experience.organization[lang]}</p>
+          <h1>{experience.role[lang]}</h1>
+        </div>
+        <div class="case-logo-group" aria-label={experience.organization[lang]}>
+          {experience.logos.map((logo) => (
+            <img class={logo.className} src={asset(logo.src)} alt={logo.alt} loading="lazy" />
+          ))}
+        </div>
+      </div>
+      <p class="case-summary">{experience.summary[lang]}</p>
+      <div class="case-meta">
+        <span>{experience.period[lang]}</span>
+        <span>{experience.organization[lang]}</span>
+        <span>{experience.technologies.join(" · ")}</span>
+      </div>
+    </header>
+
+    <div class="case-body">
+      <section>
+        <p class="case-index">01</p>
+        <div><h2>{t.labels.context}</h2><p>{experience.context[lang]}</p></div>
+      </section>
+      <section>
+        <p class="case-index">02</p>
+        <div><h2>{t.labels.objective}</h2><p>{experience.objective[lang]}</p></div>
+      </section>
+      <section>
+        <p class="case-index">03</p>
+        <div><h2>{t.labels.approach}</h2><ol class="text-list">{experience.approach[lang].map((x) => <li>{x}</li>)}</ol></div>
+      </section>
+      <section>
+        <p class="case-index">04</p>
+        <div>
+          <h2>{t.labels.results}</h2>
+          <ul class="text-list">{experience.results[lang].map((x) => <li>{x}</li>)}</ul>
+          <div class="results-evidence experience-results">
+            {experienceType === "edf" && (
+              <>
+                <div class="anomaly-metrics experience-metrics">
+                  <div><strong>17k</strong><span>{lang === "en" ? "French reports" : "constats français"}</span></div>
+                  <div><strong>4</strong><span>{lang === "en" ? "importance levels" : "niveaux d'importance"}</span></div>
+                  <div><strong>62%</strong><span>TF-IDF + NN</span></div>
+                  <div><strong>54%</strong><span>Word2Vec + LSTM</span></div>
+                </div>
+                <img class="case-diagram" src={asset("images/projects/edf-nlp.svg")} alt={lang === "en" ? "EDF report-assistance workflow for importance prediction and similar-report retrieval" : "Workflow EDF d'aide à la rédaction pour la prédiction d'importance et la recherche de constats similaires"} loading="lazy" />
+                <div class="experience-outcome-grid">
+                  <article><span>{lang === "en" ? "Prediction" : "Prédiction"}</span><p>{lang === "en" ? "Early stopping raised TF-IDF validation accuracy from 58% to 62% and reduced the visible overfitting in the learning curves." : "L'early stopping a fait progresser l'accuracy de validation de TF-IDF de 58 % à 62 % et réduit le surapprentissage visible sur les courbes."}</p></article>
+                  <article><span>{lang === "en" ? "Search" : "Recherche"}</span><p>{lang === "en" ? "BM25 turned a text query into a ranked list of related reports, a clearer match for the writing workflow than loosely separated clusters." : "BM25 transformait une requête textuelle en liste classée de constats proches, bien plus adaptée à la rédaction que des clusters mal séparés."}</p></article>
+                </div>
+              </>
+            )}
+            {experienceType === "gmi" && (
+              <>
+                <div class="anomaly-metrics experience-metrics evidence-metrics--three">
+                  <div><strong>3024 × 4032</strong><span>{lang === "en" ? "test image" : "image test"}</span></div>
+                  <div><strong>&lt;1 s</strong><span>{lang === "en" ? "Canny extraction" : "extraction Canny"}</span></div>
+                  <div><strong>3</strong><span>{lang === "en" ? "fitting methods studied" : "méthodes d'ajustement"}</span></div>
+                </div>
+                <img class="case-diagram" src={asset("images/projects/gmi-vision.svg")} alt={lang === "en" ? "GMI computer-vision workflow from container image to fill-level geometry" : "Workflow de vision GMI de l'image du contenant à la géométrie du niveau de remplissage"} loading="lazy" />
+                <div class="experience-limit"><span>{lang === "en" ? "What remained unresolved" : "Point encore non résolu"}</span><p>{lang === "en" ? "The experiments gave us a workable technical base, yet one obstacle remained: recovering an ellipse reliably from a contour that combines missing sections with pixel noise." : "Les essais ont fourni une base technique exploitable, mais un obstacle persistait : reconstruire une ellipse de façon fiable à partir d'un contour mêlant sections manquantes et bruit pixel."}</p></div>
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+      <section>
+        <p class="case-index">05</p>
+        <div><h2>{t.labels.tech}</h2><p>{experience.technologies.join(", ")}</p></div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
