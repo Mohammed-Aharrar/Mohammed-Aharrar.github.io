@@ -31,8 +31,8 @@ export const experiences: ExperienceCase[] = [
       fr: "Prototype NLP fondé sur 17 000 constats techniques en français, avec une chaîne de prédiction de l'importance et une autre de recherche historique."
     },
     context: {
-      en: "EDF teams write a technical report after an event at a nuclear power plant. Titles, descriptions, immediate actions and issuer proposals later receive one of four importance levels. My final-year internship worked from 17,000 such documents, full of specialist French vocabulary and uneven class frequencies.",
-      fr: "Après un événement en centrale nucléaire, les équipes EDF rédigent un constat technique. Titre, description, actions immédiates et proposition de l'émetteur reçoivent ensuite l'un des quatre niveaux d'importance. Mon PFE s'appuyait sur 17 000 de ces documents, avec un vocabulaire français très métier et des classes inégalement réparties."
+      en: "The Mathematical and Industrial Engineering (GMI) department at Mines Saint-Étienne focuses on applied mathematics, optimization, modelling and data analysis for industrial problems. The IT'm Factory reproduces a manufacturing line where pots move through filling, sealing and packing. During my internship, I studied a transparent vision-based check for the container opening and the fill boundary—two shapes needed to estimate quantity and spot foreign material.",
+      fr: "Le département Génie mathématique et industriel (GMI) de Mines Saint-Étienne travaille notamment sur les mathématiques appliquées, l'optimisation, la modélisation et l'analyse de données pour des problématiques industrielles. L'IT'm Factory reproduit une ligne de fabrication où les pots passent par le remplissage, la fermeture et l'emballage. Pendant mon stage, j'ai étudié un contrôle visuel interprétable de l'ouverture du contenant et de la limite du produit, deux formes nécessaires pour estimer la quantité et repérer un corps étranger."
     },
     objective: {
       en: "Give writers an early importance estimate with a confidence score, then surface earlier reports that may help them complete the new entry.",
@@ -106,12 +106,10 @@ export const experiences: ExperienceCase[] = [
     },
     results: {
       en: [
-        "Canny processed the 3024 × 4032 test image in under one second.",
         "A numerically stable algebraic formulation fitted partially observed ellipses quickly when noise stayed low.",
         "Broken arcs combined with pixel-level noise still defeated reliable recovery, so the prototype never claimed production readiness."
       ],
       fr: [
-        "Canny a traité l'image test de 3024 × 4032 pixels en moins d'une seconde.",
         "Une formulation algébrique numériquement stable ajustait rapidement les ellipses partielles tant que le bruit restait faible.",
         "L'association d'arcs cassés et de bruit pixel empêchait encore une reconstruction fiable ; le prototype ne prétendait donc pas être prêt pour la production."
       ]
