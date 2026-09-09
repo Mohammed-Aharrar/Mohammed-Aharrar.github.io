@@ -73,7 +73,7 @@ const evidenceType =
       <div class="case-meta">
         <span>{project.period[lang]}</span>
         <span>{project.category[lang]}</span>
-        <span>{project.technologies.join(" · ")}</span>
+        <span>{project.technologies[lang].join(" · ")}</span>
       </div>
     </header>
 
@@ -119,9 +119,9 @@ const evidenceType =
             {evidenceType === "anomaly" && (
               <div class="anomaly-case-study">
                 <div class="anomaly-metrics" aria-label={lang === "en" ? "Industrial anomaly detection metrics" : "Métriques de détection d'anomalies industrielles"}>
-                  <div><strong>0.92</strong><span>F1 · FPCA + Mahalanobis</span></div>
+                  <div><strong>{lang === "en" ? "0.92" : "0,92"}</strong><span>F1 · FPCA + Mahalanobis</span></div>
                   <div><strong>50</strong><span>{lang === "en" ? "recordings" : "enregistrements"}</span></div>
-                  <div><strong>99%+</strong><span>{lang === "en" ? "variance retained" : "variance conservée"}</span></div>
+                  <div><strong>{lang === "en" ? "99%+" : "99 %+"}</strong><span>{lang === "en" ? "variance retained" : "variance conservée"}</span></div>
                   <div><strong>11 / 12</strong><span>{lang === "en" ? "PCA / FPCA components" : "composantes PCA / FPCA"}</span></div>
                 </div>
 
@@ -129,11 +129,11 @@ const evidenceType =
 
                 <div class="anomaly-comparison">
                   <div class="comparison-heading">{lang === "en" ? "Model comparison" : "Comparaison des modèles"}</div>
-                  <div class="comparison-row comparison-header"><span>{lang === "en" ? "Representation + score" : "Représentation + score"}</span><span>F1</span><span>Precision</span><span>Recall</span></div>
-                  <div class="comparison-row"><span>PCA + OSPCA</span><span>0.86</span><span>75%</span><span>100%</span></div>
-                  <div class="comparison-row"><span>PCA + Mahalanobis</span><span>0.76</span><span>71%</span><span>83%</span></div>
-                  <div class="comparison-row"><span>FPCA + OSPCA</span><span>0.73</span><span>80%</span><span>67%</span></div>
-                  <div class="comparison-row comparison-best"><span>FPCA + Mahalanobis</span><span>0.92</span><span>92%</span><span>92%</span></div>
+                  <div class="comparison-row comparison-header"><span>{lang === "en" ? "Representation + score" : "Représentation + score"}</span><span>F1</span><span>{lang === "en" ? "Precision" : "Précision"}</span><span>{lang === "en" ? "Recall" : "Rappel"}</span></div>
+                  <div class="comparison-row"><span>PCA + OSPCA</span><span>{lang === "en" ? "0.86" : "0,86"}</span><span>{lang === "en" ? "75%" : "75 %"}</span><span>{lang === "en" ? "100%" : "100 %"}</span></div>
+                  <div class="comparison-row"><span>PCA + Mahalanobis</span><span>{lang === "en" ? "0.76" : "0,76"}</span><span>{lang === "en" ? "71%" : "71 %"}</span><span>{lang === "en" ? "83%" : "83 %"}</span></div>
+                  <div class="comparison-row"><span>FPCA + OSPCA</span><span>{lang === "en" ? "0.73" : "0,73"}</span><span>{lang === "en" ? "80%" : "80 %"}</span><span>{lang === "en" ? "67%" : "67 %"}</span></div>
+                  <div class="comparison-row comparison-best"><span>FPCA + Mahalanobis</span><span>{lang === "en" ? "0.92" : "0,92"}</span><span>{lang === "en" ? "92%" : "92 %"}</span><span>{lang === "en" ? "92%" : "92 %"}</span></div>
                 </div>
                 <p class="evidence-caption">{lang === "en" ? "I keep the source recordings private here; the modelling choices, evaluation protocol and measured scores remain visible." : "Je garde ici les enregistrements sources privés ; les choix de modélisation, le protocole d'évaluation et les scores mesurés restent visibles."}</p>
               </div>
@@ -173,7 +173,7 @@ const evidenceType =
             {evidenceType === "traffic" && (
               <div class="project-evidence-stack">
                 <div class="anomaly-metrics evidence-metrics evidence-metrics--three">
-                  <div><strong>1,000</strong><span>{lang === "en" ? "simulation steps" : "étapes simulées"}</span></div>
+                  <div><strong>{lang === "en" ? "1,000" : "1 000"}</strong><span>{lang === "en" ? "simulation steps" : "étapes simulées"}</span></div>
                   <div><strong>2–4×</strong><span>{lang === "en" ? "lower waiting time" : "attente réduite"}</span></div>
                   <div><strong>4</strong><span>{lang === "en" ? "traffic-light agents" : "agents de feux"}</span></div>
                 </div>
@@ -184,10 +184,10 @@ const evidenceType =
             {evidenceType === "letters" && (
               <div class="project-evidence-stack">
                 <div class="anomaly-metrics evidence-metrics">
-                  <div><strong>1,600</strong><span>{lang === "en" ? "motion samples" : "séquences"}</span></div>
-                  <div><strong>85.625%</strong><span>Random Forest</span></div>
-                  <div><strong>93%</strong><span>{lang === "en" ? "LSTM accuracy" : "accuracy LSTM"}</span></div>
-                  <div><strong>55%</strong><span>{lang === "en" ? "unseen user" : "utilisateur inconnu"}</span></div>
+                  <div><strong>{lang === "en" ? "1,600" : "1 600"}</strong><span>{lang === "en" ? "motion samples" : "séquences"}</span></div>
+                  <div><strong>{lang === "en" ? "85.625%" : "85,625 %"}</strong><span>Random Forest</span></div>
+                  <div><strong>{lang === "en" ? "93%" : "93 %"}</strong><span>{lang === "en" ? "LSTM accuracy" : "accuracy LSTM"}</span></div>
+                  <div><strong>{lang === "en" ? "55%" : "55 %"}</strong><span>{lang === "en" ? "unseen user" : "utilisateur inconnu"}</span></div>
                 </div>
                 <img class="case-diagram" src={asset("/images/projects/letter-lstm.svg")} alt={lang === "en" ? "LSTM architecture for classifying smart-glove motion sequences" : "Architecture LSTM pour classifier les séquences du gant intelligent"} loading="lazy" />
                 <p class="evidence-caption">{lang === "en" ? "The regular split produced 93%. Once I reserved one participant for testing, accuracy dropped to 55%; writing style mattered far more than the first score suggested." : "Le split standard donnait 93 %. En réservant un participant au test, l'accuracy descendait à 55 % ; le style gestuel comptait bien davantage que ne le suggérait le premier score."}</p>
@@ -202,7 +202,7 @@ const evidenceType =
         <p class="case-index">05</p>
         <div>
           <h2>{t.labels.tech}</h2>
-          <p>{project.technologies.join(", ")}</p>
+          <p>{project.technologies[lang].join(", ")}</p>
         </div>
       </section>
     </div>

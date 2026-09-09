@@ -62,7 +62,9 @@ const internshipActions = lang === "en"
   ? ["Read the EDF internship", "Open the GMI work"]
   : ["Lire le PFE chez EDF", "Ouvrir le stage au GMI"];
 
-const focus = ["Machine Learning", "NLP", "Computer Vision", "Data & Cloud"];
+const focus = lang === "en"
+  ? ["Machine Learning", "NLP", "Computer Vision", "Data & Cloud"]
+  : ["Machine Learning", "NLP", "Vision par ordinateur", "Données & Cloud"];
 ---
 
 <BaseLayout lang={lang} title={`${profile.name} | ${t.role}`} description={t.intro}>
@@ -73,7 +75,7 @@ const focus = ["Machine Learning", "NLP", "Computer Vision", "Data & Cloud"];
       <p class="home-hero-lead">{t.intro}</p>
       <div class="home-actions">
         <a class="home-action-primary" href={`/${lang}/projects/`}>
-          {lang === "en" ? "See selected work" : "Voir les projets sélectionnés"}
+          {t.all}
           <span aria-hidden="true">→</span>
         </a>
         <a class="home-action-secondary" href={`/${lang}/about/#contact`}>
@@ -172,7 +174,7 @@ const focus = ["Machine Learning", "NLP", "Computer Vision", "Data & Cloud"];
           </div>
           <div class="home-project-side">
             <span>{project.period[lang]}</span>
-            <p>{project.technologies.slice(0, 4).join(" · ")}</p>
+            <p>{project.technologies[lang].slice(0, 4).join(" · ")}</p>
             <span class="home-project-link">{projectActions[index]} <b aria-hidden="true">→</b></span>
           </div>
         </a>

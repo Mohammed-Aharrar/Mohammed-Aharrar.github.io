@@ -23,7 +23,7 @@ const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" :
 <BaseLayout lang={lang} title={`${experience.role[lang]} | Mohammed Aharrar Soulali`} description={experience.summary[lang]}>
   <article class="case shell">
     <a class="back-link" href={`/${lang}/#experience-heading`}>
-      {lang === "en" ? "Back to internships" : "Retour aux stages"}
+      {lang === "en" ? "Back to home" : "Retour à l'accueil"}
     </a>
 
     <header class="case-header">
@@ -42,7 +42,7 @@ const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" :
       <div class="case-meta">
         <span>{experience.period[lang]}</span>
         <span>{experience.organization[lang]}</span>
-        <span>{experience.technologies.join(" · ")}</span>
+        <span>{experience.technologies[lang].join(" · ")}</span>
       </div>
     </header>
 
@@ -68,10 +68,10 @@ const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" :
             {experienceType === "edf" && (
               <>
                 <div class="anomaly-metrics experience-metrics">
-                  <div><strong>17k</strong><span>{lang === "en" ? "French reports" : "constats français"}</span></div>
+                  <div><strong>{lang === "en" ? "17k" : "17 000"}</strong><span>{lang === "en" ? "French reports" : "constats français"}</span></div>
                   <div><strong>4</strong><span>{lang === "en" ? "importance levels" : "niveaux d'importance"}</span></div>
-                  <div><strong>62%</strong><span>TF-IDF + NN</span></div>
-                  <div><strong>54%</strong><span>Word2Vec + LSTM</span></div>
+                  <div><strong>{lang === "en" ? "62%" : "62 %"}</strong><span>TF-IDF + NN</span></div>
+                  <div><strong>{lang === "en" ? "54%" : "54 %"}</strong><span>Word2Vec + LSTM</span></div>
                 </div>
                 <img class="case-diagram" src={asset("images/projects/edf-nlp.svg")} alt={lang === "en" ? "EDF report-assistance workflow for importance prediction and similar-report retrieval" : "Workflow EDF d'aide à la rédaction pour la prédiction d'importance et la recherche de constats similaires"} loading="lazy" />
                 <div class="experience-outcome-grid">
@@ -83,8 +83,8 @@ const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" :
             {experienceType === "gmi" && (
               <>
                 <div class="anomaly-metrics experience-metrics evidence-metrics--three">
-                  <div><strong>3024 × 4032</strong><span>{lang === "en" ? "test image" : "image test"}</span></div>
-                  <div><strong>&lt;1 s</strong><span>{lang === "en" ? "Canny extraction" : "extraction Canny"}</span></div>
+                  <div><strong>{lang === "en" ? "3024 × 4032" : "3 024 × 4 032"}</strong><span>{lang === "en" ? "test image" : "image test"}</span></div>
+                  <div><strong>{lang === "en" ? "<1 s" : "< 1 s"}</strong><span>{lang === "en" ? "Canny extraction" : "extraction Canny"}</span></div>
                   <div><strong>3</strong><span>{lang === "en" ? "fitting methods studied" : "méthodes d'ajustement"}</span></div>
                 </div>
                 <img class="case-diagram" src={asset("images/projects/gmi-vision.svg")} alt={lang === "en" ? "GMI computer-vision workflow from container image to fill-level geometry" : "Workflow de vision GMI de l'image du contenant à la géométrie du niveau de remplissage"} loading="lazy" />
@@ -96,7 +96,7 @@ const experienceType = experience.slug === "edf-nlp-technical-reports" ? "edf" :
       </section>
       <section>
         <p class="case-index">05</p>
-        <div><h2>{t.labels.tech}</h2><p>{experience.technologies.join(", ")}</p></div>
+        <div><h2>{t.labels.tech}</h2><p>{experience.technologies[lang].join(", ")}</p></div>
       </section>
     </div>
   </article>

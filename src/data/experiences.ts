@@ -13,7 +13,7 @@ export type ExperienceCase = {
   objective: T;
   approach: L;
   results: L;
-  technologies: string[];
+  technologies: L;
   logos: { src: string; alt: string; className: string }[];
 };
 
@@ -42,12 +42,14 @@ export const experiences: ExperienceCase[] = [
       en: [
         "Discarded contradictory duplicates and very short entries before making a stratified 80/20 train-test split.",
         "Cleaned four free-text fields without erasing domain abbreviations; TF-IDF and Word2Vec then supplied competing representations.",
+        "A Transformer-based approach was also tested, but it handled EDF-specific abbreviations and domain meanings unreliably, so it was not retained.",
         "Applied SMOTE to the training data and compared a dense network with a dual-input LSTM.",
         "Tried K-means and HDBSCAN for suggestions, found their themes too mixed to help a writer, and switched to BM25 ranking."
       ],
       fr: [
         "Retrait des doublons contradictoires et des entrées trop courtes avant une séparation train-test stratifiée 80/20.",
         "Nettoyage des quatre champs libres sans effacer les abréviations métier, puis mise en concurrence de TF-IDF et Word2Vec.",
+        "Une approche basée sur les Transformers a également été testée, mais elle gérait de façon peu fiable les abréviations et les sens propres au vocabulaire EDF ; elle n'a donc pas été retenue.",
         "Application de SMOTE aux données d'entraînement et comparaison d'un réseau dense avec un LSTM à deux entrées.",
         "Essais de K-means et HDBSCAN pour les suggestions, constat de thèmes trop mélangés, puis passage à un classement BM25."
       ]
@@ -64,7 +66,7 @@ export const experiences: ExperienceCase[] = [
         "Pour retrouver des constats proches, BM25 donnait une liste classée lisible là où le clustering formait des groupes confus."
       ]
     },
-    technologies: ["Python", "NLP", "TF-IDF", "Word2Vec", "LSTM", "SMOTE", "BM25", "K-means", "HDBSCAN"],
+    technologies: { en: ["Python", "NLP", "TF-IDF", "Word2Vec", "LSTM", "SMOTE", "BM25", "K-means", "HDBSCAN"], fr: ["Python", "NLP", "TF-IDF", "Word2Vec", "LSTM", "SMOTE", "BM25", "K-means", "HDBSCAN"] },
     logos: [{ src: "logos/edf.png", alt: "EDF", className: "brand-edf" }]
   },
   {
@@ -76,7 +78,7 @@ export const experiences: ExperienceCase[] = [
     },
     role: {
       en: "Assistant Engineer Internship · Computer Vision",
-      fr: "Stage assistant ingénieur · Computer Vision"
+      fr: "Stage assistant ingénieur · Vision par ordinateur"
     },
     summary: {
       en: "A computer-vision investigation into ellipse recovery from broken, noisy contours for pot-filling quality control.",
@@ -114,7 +116,7 @@ export const experiences: ExperienceCase[] = [
         "L'association d'arcs cassés et de bruit pixel empêchait encore une reconstruction fiable ; le prototype ne prétendait donc pas être prêt pour la production."
       ]
     },
-    technologies: ["Python", "OpenCV", "Computer Vision", "Canny", "Ellipse Fitting", "TLBO", "SVD", "Numerical Optimization"],
+    technologies: { en: ["Python", "OpenCV", "Computer Vision", "Canny", "Ellipse Fitting", "TLBO", "SVD", "Numerical Optimization"], fr: ["Python", "OpenCV", "Vision par ordinateur", "Canny", "Ajustement d'ellipses", "TLBO", "SVD", "Optimisation numérique"] },
     logos: [
       { src: "logos/gmi.png", alt: "GMI - Mines Saint-Étienne", className: "brand-gmi" },
       { src: "logos/mines.png", alt: "Mines Saint-Étienne", className: "brand-mines-secondary" }
