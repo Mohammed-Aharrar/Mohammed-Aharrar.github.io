@@ -31,8 +31,8 @@ export const experiences: ExperienceCase[] = [
       fr: "Prototype NLP fondé sur 17 000 constats techniques en français, avec une chaîne de prédiction de l'importance et une autre de recherche historique."
     },
     context: {
-      en: "The Mathematical and Industrial Engineering (GMI) department at Mines Saint-Étienne focuses on applied mathematics, optimization, modelling and data analysis for industrial problems. The IT'm Factory reproduces a manufacturing line where pots move through filling, sealing and packing. During my internship, I studied a transparent vision-based check for the container opening and the fill boundary—two shapes needed to estimate quantity and spot foreign material.",
-      fr: "Le département Génie mathématique et industriel (GMI) de Mines Saint-Étienne travaille notamment sur les mathématiques appliquées, l'optimisation, la modélisation et l'analyse de données pour des problématiques industrielles. L'IT'm Factory reproduit une ligne de fabrication où les pots passent par le remplissage, la fermeture et l'emballage. Pendant mon stage, j'ai étudié un contrôle visuel interprétable de l'ouverture du contenant et de la limite du produit, deux formes nécessaires pour estimer la quantité et repérer un corps étranger."
+      en: "EDF teams write a technical report after an event at a nuclear power plant. Titles, descriptions, immediate actions and issuer proposals later receive one of four importance levels. My final-year internship worked from 17,000 such documents, full of specialist French vocabulary and uneven class frequencies.",
+      fr: "Après un événement en centrale nucléaire, les équipes EDF rédigent un constat technique. Titre, description, actions immédiates et proposition de l'émetteur reçoivent ensuite l'un des quatre niveaux d'importance. Mon PFE s'appuyait sur 17 000 de ces documents, avec un vocabulaire français très métier et des classes inégalement réparties."
     },
     objective: {
       en: "Give writers an early importance estimate with a confidence score, then surface earlier reports that may help them complete the new entry.",
@@ -83,8 +83,8 @@ export const experiences: ExperienceCase[] = [
       fr: "Étude en vision par ordinateur sur la reconstruction d'ellipses à partir de contours cassés et bruités pour le contrôle du remplissage."
     },
     context: {
-      en: "The IT'm Factory reproduces a manufacturing line where pots move through filling, sealing and packing. During my GMI internship, I studied a transparent vision-based check for the container opening and the fill boundary—two shapes needed to estimate quantity and spot foreign material.",
-      fr: "L'IT'm Factory reproduit une ligne de fabrication où les pots passent par le remplissage, la fermeture et l'emballage. Pendant mon stage au GMI, j'ai étudié un contrôle visuel interprétable de l'ouverture du contenant et de la limite du produit, deux formes nécessaires pour estimer la quantité et repérer un corps étranger."
+      en: "The Mathematical and Industrial Engineering (GMI) department at Mines Saint-Étienne focuses on applied mathematics, optimization, modelling and data analysis for industrial problems. The IT'm Factory reproduces a manufacturing line where pots move through filling, sealing and packing. During my internship, I studied a transparent vision-based check for the container opening and the fill boundary—two shapes needed to estimate quantity and spot foreign material.",
+      fr: "Le département Génie mathématique et industriel (GMI) de Mines Saint-Étienne travaille notamment sur les mathématiques appliquées, l'optimisation, la modélisation et l'analyse de données pour des problématiques industrielles. L'IT'm Factory reproduit une ligne de fabrication où les pots passent par le remplissage, la fermeture et l'emballage. Pendant mon stage, j'ai étudié un contrôle visuel interprétable de l'ouverture du contenant et de la limite du produit, deux formes nécessaires pour estimer la quantité et repérer un corps étranger."
     },
     objective: {
       en: "Find out how far traditional vision and numerical fitting could recover fill-level geometry when the available arcs remain incomplete and noisy.",
