@@ -42,14 +42,14 @@ export const experiences: ExperienceCase[] = [
       en: [
         "Discarded contradictory duplicates and very short entries before making a stratified 80/20 train-test split.",
         "Cleaned four free-text fields without erasing domain abbreviations; TF-IDF and Word2Vec then supplied competing representations.",
-        "A Transformer-based approach was also tested, but it handled EDF-specific abbreviations and domain meanings unreliably, so it was not retained.",
+        "A Transformer-based model was also fine-tuned, but its performance on this domain-specific corpus was not sufficient to retain it.",
         "Applied SMOTE to the training data and compared a dense network with a dual-input LSTM.",
         "Tried K-means and HDBSCAN for suggestions, found their themes too mixed to help a writer, and switched to BM25 ranking."
       ],
       fr: [
         "Retrait des doublons contradictoires et des entrées trop courtes avant une séparation train-test stratifiée 80/20.",
         "Nettoyage des quatre champs libres sans effacer les abréviations métier, puis mise en concurrence de TF-IDF et Word2Vec.",
-        "Une approche basée sur les Transformers a également été testée, mais elle gérait de façon peu fiable les abréviations et les sens propres au vocabulaire EDF ; elle n'a donc pas été retenue.",
+        "Un modèle Transformer a également été adapté par fine-tuning, mais ses performances sur ce corpus métier n'étaient pas suffisantes pour qu'il soit retenu.",
         "Application de SMOTE aux données d'entraînement et comparaison d'un réseau dense avec un LSTM à deux entrées.",
         "Essais de K-means et HDBSCAN pour les suggestions, constat de thèmes trop mélangés, puis passage à un classement BM25."
       ]
